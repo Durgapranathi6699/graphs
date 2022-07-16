@@ -1,0 +1,25 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+     int color[]=new int[graph.length];
+        Arrays.fill(color,-1);
+        for(int i=0;i<graph.length;i++){
+            Queue<Integer> q=new LinkedList<>();
+            if(color[i]==-1){
+                q.add(i);
+                color[i]=1;
+                while(!q.isEmpty()){
+                    int cur=q.poll();
+                    int n[]=graph[cur];//adjacent nodes of cur
+                    for(int j:n){
+                        if(color[j]==color[cur])return false;//if cur node and adjacent node has same color then return false
+                        if(color[j]==-1){
+                            color[j]=1-color[cur];
+                            q.add(j);
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
