@@ -1,0 +1,27 @@
+class Solution {
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean vis[]=new boolean[V];
+        for(int i=0;i<V;i++){//traverse all nodes
+            if(vis[i]==false){//if its not been visited 
+                if(checkForCycle(i,-1,adj,vis))return true;//check for cycle
+            }
+        }
+        return false;
+    }
+    public boolean checkForCycle(int node,int parent,ArrayList<ArrayList<Integer>> adj,boolean vis[]){
+        vis[node]=true;
+        //check for adjacent nodes
+        for(int it:adj.get(node)){
+            if(vis[it]==false){//if adj nodes not visited
+                if(checkForCycle(it,node,adj,vis))return true;//recursively call 
+                //cur node is it ,parent node as node
+            }
+            else if(vis[it]==true && parent!=it){//node been visited and it not the parent
+            //cycle is found
+                return true;
+            }
+        }
+        return false;
+    }
+}
