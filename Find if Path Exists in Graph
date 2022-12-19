@@ -1,0 +1,31 @@
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        //create adjacency matrix
+       Map<Integer,List<Integer>> map=new HashMap<>();
+        for(int edge[]:edges){
+            if(!map.containsKey(edge[0])){
+                map.put(edge[0],new ArrayList<>());
+            }
+             if(!map.containsKey(edge[1])){
+                map.put(edge[1],new ArrayList<>());
+            }
+            map.get(edge[0]).add(edge[1]);
+            map.get(edge[1]).add(edge[0]);
+        }
+         boolean vis[]=new boolean[n];
+         return haspath(source,destination,map,vis);
+    }
+    public boolean haspath(int source, int destination,Map<Integer,List<Integer>> map, boolean vis[]){
+        if(source==destination){return true;    }
+        vis[source]=true;
+          for(int neig:map.get(source)){
+                 if(vis[neig]==false){
+                    boolean haspath= haspath(neig,destination,map,vis);
+                    if(haspath){
+                        return true;
+                    }
+               }
+            }
+         return false;
+    }
+}
