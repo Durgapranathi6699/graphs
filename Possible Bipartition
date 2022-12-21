@@ -1,0 +1,35 @@
+class Solution {
+    public boolean possibleBipartition(int N, int[][] dislikes) {  
+        HashMap<Integer, List<Integer>> map = new HashMap<>(); 
+         int[] color = new int[N + 1];
+        Queue<Integer> q = new LinkedList<>();
+        Arrays.fill(color,-1);
+      //creating adjacency matrix
+        for (int i = 1; i <= N; i++) {
+            map.put(i, new ArrayList<>());
+        }
+        for (int[] a: dislikes) {
+            map.get(a[0]).add(a[1]);
+            map.get(a[1]).add(a[0]);
+        }
+    for(int i=1;i<=N;i++){
+            if(color[i]==-1){ //if the element is not coloured ,color it and add it into the queue
+                q.add(i);
+                color[i]=1;//colored
+            while(!q.isEmpty()){ //now color all the adjacent elements with another color other than its cur 
+                int cur=q.poll();
+               List<Integer> m=map.get(cur); //all ajacent elements
+                for(int j:m){
+                    if(color[j]==color[cur])return false;//if adjacent nodes have same color
+                    if(color[j]==-1){
+                        color[j]=1-color[cur];//color with opposite color(if its 0 color with 1 and vice versa)
+                        q.add(j);
+                    }
+                }
+            }
+        } }
+        return true;
+    }
+
+}
+
