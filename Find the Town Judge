@@ -1,0 +1,17 @@
+class Solution {
+    public int findJudge(int n, int[][] trust) {
+        //do not trust on anyone
+        //all should trust him
+        int ans[]=new int[n+1];
+        for(int a[]:trust){
+            ans[a[0]]--;
+            ans[a[1]]++;
+        }
+        for(int i=1;i<ans.length;i++){
+            if(ans[i]==n-1){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
