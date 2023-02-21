@@ -1,0 +1,35 @@
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        List<List<Integer>> l=new ArrayList<>();
+        for(int i=0;i<isConnected.length;i++)l.add(new ArrayList<>());
+       //create adjacency matrix
+       for(int i=0;i<isConnected.length;i++){
+           for(int j=0;j<isConnected[i].length;j++){
+               if(isConnected[i][j]==1 && i!=j){
+                    l.get(i).add(j);
+                    l.get(j).add(i);
+               }
+           }
+       }
+       boolean vis[]=new boolean[isConnected.length];
+       Arrays.fill(vis,false);
+       //call dfs for each vertex
+        int ans=0;
+       for(int i=0;i<isConnected.length;i++){
+          if(!vis[i]){
+              ans++;
+              dfs(l,i,vis);
+          }
+       }
+        //increment count 
+       return ans;
+    }
+    void dfs(List<List<Integer>> l,int i,boolean vis[]){
+        vis[i]=true;
+        for(int n:l.get(i)){
+            if(!vis[n]){
+                dfs(l,n,vis);
+            }
+        }
+    }
+}
